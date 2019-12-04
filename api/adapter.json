@@ -1,0 +1,2077 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "definitions": {
+        "Breakpoint": {
+            "properties": {
+                "verified": {
+                    "description": "If true breakpoint could be set (but not necessarily at the desired location).",
+                    "title": "verified",
+                    "type": "boolean"
+                }
+            },
+            "propertyOrder": [
+                "verified"
+            ],
+            "title": "Breakpoint",
+            "type": "object"
+        },
+        "BreakpointEvent": {
+            "properties": {
+                "body": {
+                    "description": "Event-specific information.",
+                    "properties": {
+                        "breakpoint": {
+                            "$ref": "#/definitions/Breakpoint",
+                            "title": "breakpoint"
+                        },
+                        "reason": {
+                            "title": "reason",
+                            "type": "string"
+                        }
+                    },
+                    "propertyOrder": [
+                        "reason",
+                        "breakpoint"
+                    ],
+                    "title": "body",
+                    "type": "object"
+                },
+                "event": {
+                    "description": "Type of event.",
+                    "title": "event",
+                    "type": "string"
+                },
+                "seq": {
+                    "description": "Sequence number (also known as message ID). For protocol messages of type 'request' this ID can be used to cancel the request.",
+                    "title": "seq",
+                    "type": "number"
+                },
+                "type": {
+                    "description": "Message type.\nValues: 'request', 'response', 'event', etc.",
+                    "title": "type",
+                    "type": "string"
+                }
+            },
+            "propertyOrder": [
+                "body",
+                "event",
+                "seq",
+                "type"
+            ],
+            "type": "object"
+        },
+        "CapabilitiesEvent": {
+            "properties": {
+                "body": {
+                    "description": "Event-specific information.",
+                    "properties": {
+                        "capabilities": {
+                            "$ref": "#/definitions/DebugProtocol.Capabilities",
+                            "title": "capabilities"
+                        }
+                    },
+                    "propertyOrder": [
+                        "capabilities"
+                    ],
+                    "title": "body",
+                    "type": "object"
+                },
+                "event": {
+                    "description": "Type of event.",
+                    "title": "event",
+                    "type": "string"
+                },
+                "seq": {
+                    "description": "Sequence number (also known as message ID). For protocol messages of type 'request' this ID can be used to cancel the request.",
+                    "title": "seq",
+                    "type": "number"
+                },
+                "type": {
+                    "description": "Message type.\nValues: 'request', 'response', 'event', etc.",
+                    "title": "type",
+                    "type": "string"
+                }
+            },
+            "propertyOrder": [
+                "body",
+                "event",
+                "seq",
+                "type"
+            ],
+            "type": "object"
+        },
+        "CompletionItem": {
+            "properties": {
+                "label": {
+                    "description": "The label of this completion item. By default this is also the text that is inserted when selecting this completion.",
+                    "title": "label",
+                    "type": "string"
+                },
+                "length": {
+                    "description": "This value determines how many characters are overwritten by the completion text.\nIf missing the value 0 is assumed which results in the completion text being inserted.",
+                    "title": "length",
+                    "type": "number"
+                },
+                "start": {
+                    "description": "This value determines the location (in the CompletionsRequest's 'text' attribute) where the completion text is added.\nIf missing the text is added at the location specified by the CompletionsRequest's 'column' attribute.",
+                    "title": "start",
+                    "type": "number"
+                }
+            },
+            "propertyOrder": [
+                "label",
+                "start",
+                "length"
+            ],
+            "type": "object"
+        },
+        "ContinuedEvent": {
+            "properties": {
+                "body": {
+                    "description": "Event-specific information.",
+                    "properties": {
+                        "threadId": {
+                            "title": "threadId",
+                            "type": "number"
+                        }
+                    },
+                    "propertyOrder": [
+                        "threadId"
+                    ],
+                    "title": "body",
+                    "type": "object"
+                },
+                "event": {
+                    "description": "Type of event.",
+                    "title": "event",
+                    "type": "string"
+                },
+                "seq": {
+                    "description": "Sequence number (also known as message ID). For protocol messages of type 'request' this ID can be used to cancel the request.",
+                    "title": "seq",
+                    "type": "number"
+                },
+                "type": {
+                    "description": "Message type.\nValues: 'request', 'response', 'event', etc.",
+                    "title": "type",
+                    "type": "string"
+                }
+            },
+            "propertyOrder": [
+                "body",
+                "event",
+                "seq",
+                "type"
+            ],
+            "type": "object"
+        },
+        "DebugProtocol.Capabilities": {
+            "description": "Information about the capabilities of a debug adapter.",
+            "properties": {
+                "additionalModuleColumns": {
+                    "description": "The set of additional module information exposed by the debug adapter.",
+                    "items": {
+                        "$ref": "#/definitions/DebugProtocol.ColumnDescriptor"
+                    },
+                    "title": "additionalModuleColumns",
+                    "type": "array"
+                },
+                "completionTriggerCharacters": {
+                    "description": "The set of characters that should trigger completion in a REPL. If not specified, the UI should assume the '.' character.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "title": "completionTriggerCharacters",
+                    "type": "array"
+                },
+                "exceptionBreakpointFilters": {
+                    "description": "Available filters or options for the setExceptionBreakpoints request.",
+                    "items": {
+                        "$ref": "#/definitions/DebugProtocol.ExceptionBreakpointsFilter"
+                    },
+                    "title": "exceptionBreakpointFilters",
+                    "type": "array"
+                },
+                "supportTerminateDebuggee": {
+                    "description": "The debug adapter supports the 'terminateDebuggee' attribute on the 'disconnect' request.",
+                    "title": "supportTerminateDebuggee",
+                    "type": "boolean"
+                },
+                "supportedChecksumAlgorithms": {
+                    "description": "Checksum algorithms supported by the debug adapter.",
+                    "items": {
+                        "enum": [
+                            "MD5",
+                            "SHA1",
+                            "SHA256",
+                            "timestamp"
+                        ],
+                        "type": "string"
+                    },
+                    "title": "supportedChecksumAlgorithms",
+                    "type": "array"
+                },
+                "supportsBreakpointLocationsRequest": {
+                    "description": "The debug adapter supports the 'breakpointLocations' request.",
+                    "title": "supportsBreakpointLocationsRequest",
+                    "type": "boolean"
+                },
+                "supportsCancelRequest": {
+                    "description": "The debug adapter supports the 'cancel' request.",
+                    "title": "supportsCancelRequest",
+                    "type": "boolean"
+                },
+                "supportsCompletionsRequest": {
+                    "description": "The debug adapter supports the 'completions' request.",
+                    "title": "supportsCompletionsRequest",
+                    "type": "boolean"
+                },
+                "supportsConditionalBreakpoints": {
+                    "description": "The debug adapter supports conditional breakpoints.",
+                    "title": "supportsConditionalBreakpoints",
+                    "type": "boolean"
+                },
+                "supportsConfigurationDoneRequest": {
+                    "description": "The debug adapter supports the 'configurationDone' request.",
+                    "title": "supportsConfigurationDoneRequest",
+                    "type": "boolean"
+                },
+                "supportsDataBreakpoints": {
+                    "description": "The debug adapter supports data breakpoints.",
+                    "title": "supportsDataBreakpoints",
+                    "type": "boolean"
+                },
+                "supportsDelayedStackTraceLoading": {
+                    "description": "The debug adapter supports the delayed loading of parts of the stack, which requires that both the 'startFrame' and 'levels' arguments and the 'totalFrames' result of the 'StackTrace' request are supported.",
+                    "title": "supportsDelayedStackTraceLoading",
+                    "type": "boolean"
+                },
+                "supportsDisassembleRequest": {
+                    "description": "The debug adapter supports the 'disassemble' request.",
+                    "title": "supportsDisassembleRequest",
+                    "type": "boolean"
+                },
+                "supportsEvaluateForHovers": {
+                    "description": "The debug adapter supports a (side effect free) evaluate request for data hovers.",
+                    "title": "supportsEvaluateForHovers",
+                    "type": "boolean"
+                },
+                "supportsExceptionInfoRequest": {
+                    "description": "The debug adapter supports the 'exceptionInfo' request.",
+                    "title": "supportsExceptionInfoRequest",
+                    "type": "boolean"
+                },
+                "supportsExceptionOptions": {
+                    "description": "The debug adapter supports 'exceptionOptions' on the setExceptionBreakpoints request.",
+                    "title": "supportsExceptionOptions",
+                    "type": "boolean"
+                },
+                "supportsFunctionBreakpoints": {
+                    "description": "The debug adapter supports function breakpoints.",
+                    "title": "supportsFunctionBreakpoints",
+                    "type": "boolean"
+                },
+                "supportsGotoTargetsRequest": {
+                    "description": "The debug adapter supports the 'gotoTargets' request.",
+                    "title": "supportsGotoTargetsRequest",
+                    "type": "boolean"
+                },
+                "supportsHitConditionalBreakpoints": {
+                    "description": "The debug adapter supports breakpoints that break execution after a specified number of hits.",
+                    "title": "supportsHitConditionalBreakpoints",
+                    "type": "boolean"
+                },
+                "supportsLoadedSourcesRequest": {
+                    "description": "The debug adapter supports the 'loadedSources' request.",
+                    "title": "supportsLoadedSourcesRequest",
+                    "type": "boolean"
+                },
+                "supportsLogPoints": {
+                    "description": "The debug adapter supports logpoints by interpreting the 'logMessage' attribute of the SourceBreakpoint.",
+                    "title": "supportsLogPoints",
+                    "type": "boolean"
+                },
+                "supportsModulesRequest": {
+                    "description": "The debug adapter supports the 'modules' request.",
+                    "title": "supportsModulesRequest",
+                    "type": "boolean"
+                },
+                "supportsReadMemoryRequest": {
+                    "description": "The debug adapter supports the 'readMemory' request.",
+                    "title": "supportsReadMemoryRequest",
+                    "type": "boolean"
+                },
+                "supportsRestartFrame": {
+                    "description": "The debug adapter supports restarting a frame.",
+                    "title": "supportsRestartFrame",
+                    "type": "boolean"
+                },
+                "supportsRestartRequest": {
+                    "description": "The debug adapter supports the 'restart' request. In this case a client should not implement 'restart' by terminating and relaunching the adapter but by calling the RestartRequest.",
+                    "title": "supportsRestartRequest",
+                    "type": "boolean"
+                },
+                "supportsSetExpression": {
+                    "description": "The debug adapter supports the 'setExpression' request.",
+                    "title": "supportsSetExpression",
+                    "type": "boolean"
+                },
+                "supportsSetVariable": {
+                    "description": "The debug adapter supports setting a variable to a value.",
+                    "title": "supportsSetVariable",
+                    "type": "boolean"
+                },
+                "supportsStepBack": {
+                    "description": "The debug adapter supports stepping back via the 'stepBack' and 'reverseContinue' requests.",
+                    "title": "supportsStepBack",
+                    "type": "boolean"
+                },
+                "supportsStepInTargetsRequest": {
+                    "description": "The debug adapter supports the 'stepInTargets' request.",
+                    "title": "supportsStepInTargetsRequest",
+                    "type": "boolean"
+                },
+                "supportsTerminateRequest": {
+                    "description": "The debug adapter supports the 'terminate' request.",
+                    "title": "supportsTerminateRequest",
+                    "type": "boolean"
+                },
+                "supportsTerminateThreadsRequest": {
+                    "description": "The debug adapter supports the 'terminateThreads' request.",
+                    "title": "supportsTerminateThreadsRequest",
+                    "type": "boolean"
+                },
+                "supportsValueFormattingOptions": {
+                    "description": "The debug adapter supports a 'format' attribute on the stackTraceRequest, variablesRequest, and evaluateRequest.",
+                    "title": "supportsValueFormattingOptions",
+                    "type": "boolean"
+                }
+            },
+            "propertyOrder": [
+                "supportsConfigurationDoneRequest",
+                "supportsFunctionBreakpoints",
+                "supportsConditionalBreakpoints",
+                "supportsHitConditionalBreakpoints",
+                "supportsEvaluateForHovers",
+                "exceptionBreakpointFilters",
+                "supportsStepBack",
+                "supportsSetVariable",
+                "supportsRestartFrame",
+                "supportsGotoTargetsRequest",
+                "supportsStepInTargetsRequest",
+                "supportsCompletionsRequest",
+                "completionTriggerCharacters",
+                "supportsModulesRequest",
+                "additionalModuleColumns",
+                "supportedChecksumAlgorithms",
+                "supportsRestartRequest",
+                "supportsExceptionOptions",
+                "supportsValueFormattingOptions",
+                "supportsExceptionInfoRequest",
+                "supportTerminateDebuggee",
+                "supportsDelayedStackTraceLoading",
+                "supportsLoadedSourcesRequest",
+                "supportsLogPoints",
+                "supportsTerminateThreadsRequest",
+                "supportsSetExpression",
+                "supportsTerminateRequest",
+                "supportsDataBreakpoints",
+                "supportsReadMemoryRequest",
+                "supportsDisassembleRequest",
+                "supportsCancelRequest",
+                "supportsBreakpointLocationsRequest"
+            ],
+            "title": "DebugProtocol.Capabilities",
+            "type": "object"
+        },
+        "DebugProtocol.ColumnDescriptor": {
+            "description": "A ColumnDescriptor specifies what module attribute to show in a column of the ModulesView, how to format it, and what the column's label should be.\nIt is only used if the underlying UI actually supports this level of customization.",
+            "properties": {
+                "attributeName": {
+                    "description": "Name of the attribute rendered in this column.",
+                    "title": "attributeName",
+                    "type": "string"
+                },
+                "format": {
+                    "description": "Format to use for the rendered values in this column. TBD how the format strings looks like.",
+                    "title": "format",
+                    "type": "string"
+                },
+                "label": {
+                    "description": "Header UI label of column.",
+                    "title": "label",
+                    "type": "string"
+                },
+                "type": {
+                    "description": "Datatype of values in this column.  Defaults to 'string' if not specified.",
+                    "enum": [
+                        "boolean",
+                        "number",
+                        "string",
+                        "unixTimestampUTC"
+                    ],
+                    "title": "type",
+                    "type": "string"
+                },
+                "width": {
+                    "description": "Width of this column in characters (hint only).",
+                    "title": "width",
+                    "type": "number"
+                }
+            },
+            "propertyOrder": [
+                "attributeName",
+                "label",
+                "format",
+                "type",
+                "width"
+            ],
+            "title": "DebugProtocol.ColumnDescriptor",
+            "type": "object"
+        },
+        "DebugProtocol.ExceptionBreakpointsFilter": {
+            "description": "An ExceptionBreakpointsFilter is shown in the UI as an option for configuring how exceptions are dealt with.",
+            "properties": {
+                "default": {
+                    "description": "Initial value of the filter. If not specified a value 'false' is assumed.",
+                    "title": "default",
+                    "type": "boolean"
+                },
+                "filter": {
+                    "description": "The internal ID of the filter. This value is passed to the setExceptionBreakpoints request.",
+                    "title": "filter",
+                    "type": "string"
+                },
+                "label": {
+                    "description": "The name of the filter. This will be shown in the UI.",
+                    "title": "label",
+                    "type": "string"
+                }
+            },
+            "propertyOrder": [
+                "filter",
+                "label",
+                "default"
+            ],
+            "title": "DebugProtocol.ExceptionBreakpointsFilter",
+            "type": "object"
+        },
+        "DebugSession": {
+            "properties": {
+                "_clientColumnsStartAt1": {
+                    "title": "_clientColumnsStartAt1",
+                    "type": "boolean"
+                },
+                "_clientLinesStartAt1": {
+                    "title": "_clientLinesStartAt1",
+                    "type": "boolean"
+                },
+                "_clientPathsAreURIs": {
+                    "title": "_clientPathsAreURIs",
+                    "type": "boolean"
+                },
+                "_contentLength": {
+                    "title": "_contentLength",
+                    "type": "number"
+                },
+                "_debuggerColumnsStartAt1": {
+                    "title": "_debuggerColumnsStartAt1",
+                    "type": "boolean"
+                },
+                "_debuggerLinesStartAt1": {
+                    "title": "_debuggerLinesStartAt1",
+                    "type": "boolean"
+                },
+                "_debuggerPathsAreURIs": {
+                    "title": "_debuggerPathsAreURIs",
+                    "type": "boolean"
+                },
+                "_isServer": {
+                    "title": "_isServer",
+                    "type": "boolean"
+                },
+                "_pendingRequests": {
+                    "title": "_pendingRequests"
+                },
+                "_rawData": {
+                    "description": "Raw data is stored in instances of the Buffer class.\nA Buffer is similar to an array of integers but corresponds to a raw memory allocation outside the V8 heap.  A Buffer cannot be resized.\nValid string encodings: 'ascii'|'utf8'|'utf16le'|'ucs2'(alias of 'utf16le')|'base64'|'binary'(deprecated)|'hex'",
+                    "items": {
+                        "type": "number"
+                    },
+                    "title": "_rawData",
+                    "type": "array"
+                },
+                "_sequence": {
+                    "title": "_sequence",
+                    "type": "number"
+                },
+                "_writableStream": {
+                    "$ref": "#/definitions/NodeJS.WritableStream",
+                    "title": "_writableStream"
+                },
+                "error": {
+                    "$ref": "#/definitions/Emitter<Error>",
+                    "title": "error"
+                },
+                "onError": {
+                    "$ref": "#/definitions/Event0<Error>",
+                    "title": "onError"
+                },
+                "onSendMessage": {
+                    "$ref": "#/definitions/Event0<DebugProtocolMessage>",
+                    "title": "onSendMessage"
+                },
+                "sendMessage": {
+                    "$ref": "#/definitions/Emitter<DebugProtocolMessage>",
+                    "title": "sendMessage"
+                }
+            },
+            "propertyOrder": [
+                "_debuggerLinesStartAt1",
+                "_debuggerColumnsStartAt1",
+                "_debuggerPathsAreURIs",
+                "_clientLinesStartAt1",
+                "_clientColumnsStartAt1",
+                "_clientPathsAreURIs",
+                "_isServer",
+                "setDebuggerPathFormat",
+                "setDebuggerLinesStartAt1",
+                "setDebuggerColumnsStartAt1",
+                "setRunAsServer",
+                "shutdown",
+                "sendErrorResponse",
+                "runInTerminalRequest",
+                "dispatchRequest",
+                "initializeRequest",
+                "disconnectRequest",
+                "launchRequest",
+                "attachRequest",
+                "terminateRequest",
+                "restartRequest",
+                "setBreakPointsRequest",
+                "setFunctionBreakPointsRequest",
+                "setExceptionBreakPointsRequest",
+                "configurationDoneRequest",
+                "continueRequest",
+                "nextRequest",
+                "stepInRequest",
+                "stepOutRequest",
+                "stepBackRequest",
+                "reverseContinueRequest",
+                "restartFrameRequest",
+                "gotoRequest",
+                "pauseRequest",
+                "sourceRequest",
+                "threadsRequest",
+                "terminateThreadsRequest",
+                "stackTraceRequest",
+                "scopesRequest",
+                "variablesRequest",
+                "setVariableRequest",
+                "setExpressionRequest",
+                "evaluateRequest",
+                "stepInTargetsRequest",
+                "gotoTargetsRequest",
+                "completionsRequest",
+                "exceptionInfoRequest",
+                "loadedSourcesRequest",
+                "dataBreakpointInfoRequest",
+                "setDataBreakpointsRequest",
+                "readMemoryRequest",
+                "disassembleRequest",
+                "cancelRequest",
+                "breakpointLocationsRequest",
+                "customRequest",
+                "convertClientLineToDebugger",
+                "convertDebuggerLineToClient",
+                "convertClientColumnToDebugger",
+                "convertDebuggerColumnToClient",
+                "convertClientPathToDebugger",
+                "convertDebuggerPathToClient",
+                "_rawData",
+                "_contentLength",
+                "_sequence",
+                "_writableStream",
+                "_pendingRequests",
+                "sendMessage",
+                "error",
+                "onSendMessage",
+                "onError",
+                "handleMessage",
+                "start",
+                "stop",
+                "sendEvent",
+                "sendResponse",
+                "sendRequest",
+                "_emitEvent",
+                "_send",
+                "_handleData",
+                "addListener",
+                "on",
+                "once",
+                "prependListener",
+                "prependOnceListener",
+                "removeListener",
+                "removeAllListeners",
+                "setMaxListeners",
+                "getMaxListeners",
+                "listeners",
+                "emit",
+                "eventNames",
+                "listenerCount"
+            ],
+            "type": "object"
+        },
+        "Emitter<DebugProtocolMessage>": {
+            "properties": {
+                "_event": {
+                    "$ref": "#/definitions/Event0<DebugProtocolMessage>",
+                    "title": "_event"
+                },
+                "_listener": {
+                    "propertyOrder": [
+                    ],
+                    "title": "_listener",
+                    "type": "object"
+                },
+                "_this": {
+                    "title": "_this"
+                },
+                "event": {
+                    "$ref": "#/definitions/Event0<DebugProtocolMessage>",
+                    "title": "event"
+                }
+            },
+            "propertyOrder": [
+                "_event",
+                "_listener",
+                "_this",
+                "event",
+                "fire",
+                "dispose"
+            ],
+            "title": "Emitter<DebugProtocolMessage>",
+            "type": "object"
+        },
+        "Emitter<Error>": {
+            "properties": {
+                "_event": {
+                    "$ref": "#/definitions/Event0<Error>",
+                    "title": "_event"
+                },
+                "_listener": {
+                    "propertyOrder": [
+                    ],
+                    "title": "_listener",
+                    "type": "object"
+                },
+                "_this": {
+                    "title": "_this"
+                },
+                "event": {
+                    "$ref": "#/definitions/Event0<Error>",
+                    "title": "event"
+                }
+            },
+            "propertyOrder": [
+                "_event",
+                "_listener",
+                "_this",
+                "event",
+                "fire",
+                "dispose"
+            ],
+            "title": "Emitter<Error>",
+            "type": "object"
+        },
+        "ErrorDestination": {
+            "enum": [
+                1,
+                2
+            ],
+            "type": "number"
+        },
+        "Event0<DebugProtocolMessage>": {
+            "propertyOrder": [
+            ],
+            "title": "Event0<DebugProtocolMessage>",
+            "type": "object"
+        },
+        "Event0<Error>": {
+            "propertyOrder": [
+            ],
+            "title": "Event0<Error>",
+            "type": "object"
+        },
+        "InitializedEvent": {
+            "properties": {
+                "event": {
+                    "description": "Type of event.",
+                    "title": "event",
+                    "type": "string"
+                },
+                "seq": {
+                    "description": "Sequence number (also known as message ID). For protocol messages of type 'request' this ID can be used to cancel the request.",
+                    "title": "seq",
+                    "type": "number"
+                },
+                "type": {
+                    "description": "Message type.\nValues: 'request', 'response', 'event', etc.",
+                    "title": "type",
+                    "type": "string"
+                }
+            },
+            "propertyOrder": [
+                "event",
+                "seq",
+                "type"
+            ],
+            "type": "object"
+        },
+        "LoadedSourceEvent": {
+            "properties": {
+                "body": {
+                    "description": "Event-specific information.",
+                    "properties": {
+                        "reason": {
+                            "enum": [
+                                "changed",
+                                "new",
+                                "removed"
+                            ],
+                            "title": "reason",
+                            "type": "string"
+                        },
+                        "source": {
+                            "$ref": "#/definitions/Source",
+                            "title": "source"
+                        }
+                    },
+                    "propertyOrder": [
+                        "reason",
+                        "source"
+                    ],
+                    "title": "body",
+                    "type": "object"
+                },
+                "event": {
+                    "description": "Type of event.",
+                    "title": "event",
+                    "type": "string"
+                },
+                "seq": {
+                    "description": "Sequence number (also known as message ID). For protocol messages of type 'request' this ID can be used to cancel the request.",
+                    "title": "seq",
+                    "type": "number"
+                },
+                "type": {
+                    "description": "Message type.\nValues: 'request', 'response', 'event', etc.",
+                    "title": "type",
+                    "type": "string"
+                }
+            },
+            "propertyOrder": [
+                "body",
+                "event",
+                "seq",
+                "type"
+            ],
+            "type": "object"
+        },
+        "Module": {
+            "properties": {
+                "id": {
+                    "description": "Unique identifier for the module.",
+                    "title": "id",
+                    "type": [
+                        "string",
+                        "number"
+                    ]
+                },
+                "name": {
+                    "description": "A name of the module.",
+                    "title": "name",
+                    "type": "string"
+                }
+            },
+            "propertyOrder": [
+                "id",
+                "name"
+            ],
+            "title": "Module",
+            "type": "object"
+        },
+        "ModuleEvent": {
+            "properties": {
+                "body": {
+                    "description": "Event-specific information.",
+                    "properties": {
+                        "module": {
+                            "$ref": "#/definitions/Module",
+                            "title": "module"
+                        },
+                        "reason": {
+                            "enum": [
+                                "changed",
+                                "new",
+                                "removed"
+                            ],
+                            "title": "reason",
+                            "type": "string"
+                        }
+                    },
+                    "propertyOrder": [
+                        "reason",
+                        "module"
+                    ],
+                    "title": "body",
+                    "type": "object"
+                },
+                "event": {
+                    "description": "Type of event.",
+                    "title": "event",
+                    "type": "string"
+                },
+                "seq": {
+                    "description": "Sequence number (also known as message ID). For protocol messages of type 'request' this ID can be used to cancel the request.",
+                    "title": "seq",
+                    "type": "number"
+                },
+                "type": {
+                    "description": "Message type.\nValues: 'request', 'response', 'event', etc.",
+                    "title": "type",
+                    "type": "string"
+                }
+            },
+            "propertyOrder": [
+                "body",
+                "event",
+                "seq",
+                "type"
+            ],
+            "type": "object"
+        },
+        "NodeJS.WritableStream": {
+            "properties": {
+                "writable": {
+                    "title": "writable",
+                    "type": "boolean"
+                }
+            },
+            "propertyOrder": [
+                "writable",
+                "write",
+                "end",
+                "addListener",
+                "on",
+                "once",
+                "removeListener",
+                "removeAllListeners",
+                "setMaxListeners",
+                "getMaxListeners",
+                "listeners",
+                "emit",
+                "listenerCount",
+                "prependListener",
+                "prependOnceListener",
+                "eventNames"
+            ],
+            "title": "NodeJS.WritableStream",
+            "type": "object"
+        },
+        "OutputEvent": {
+            "properties": {
+                "body": {
+                    "description": "Event-specific information.",
+                    "properties": {
+                        "category": {
+                            "title": "category",
+                            "type": "string"
+                        },
+                        "data": {
+                            "title": "data"
+                        },
+                        "output": {
+                            "title": "output",
+                            "type": "string"
+                        }
+                    },
+                    "propertyOrder": [
+                        "category",
+                        "output",
+                        "data"
+                    ],
+                    "title": "body",
+                    "type": "object"
+                },
+                "event": {
+                    "description": "Type of event.",
+                    "title": "event",
+                    "type": "string"
+                },
+                "seq": {
+                    "description": "Sequence number (also known as message ID). For protocol messages of type 'request' this ID can be used to cancel the request.",
+                    "title": "seq",
+                    "type": "number"
+                },
+                "type": {
+                    "description": "Message type.\nValues: 'request', 'response', 'event', etc.",
+                    "title": "type",
+                    "type": "string"
+                }
+            },
+            "propertyOrder": [
+                "body",
+                "event",
+                "seq",
+                "type"
+            ],
+            "type": "object"
+        },
+        "Scope": {
+            "properties": {
+                "expensive": {
+                    "description": "If true, the number of variables in this scope is large or expensive to retrieve.",
+                    "title": "expensive",
+                    "type": "boolean"
+                },
+                "name": {
+                    "description": "Name of the scope such as 'Arguments', 'Locals', or 'Registers'. This string is shown in the UI as is and can be translated.",
+                    "title": "name",
+                    "type": "string"
+                },
+                "variablesReference": {
+                    "description": "The variables of this scope can be retrieved by passing the value of variablesReference to the VariablesRequest.",
+                    "title": "variablesReference",
+                    "type": "number"
+                }
+            },
+            "propertyOrder": [
+                "name",
+                "variablesReference",
+                "expensive"
+            ],
+            "type": "object"
+        },
+        "Source": {
+            "properties": {
+                "name": {
+                    "description": "The short name of the source. Every source returned from the debug adapter has a name. When sending a source to the debug adapter this name is optional.",
+                    "title": "name",
+                    "type": "string"
+                },
+                "path": {
+                    "description": "The path of the source to be shown in the UI. It is only used to locate and load the content of the source if no sourceReference is specified (or its value is 0).",
+                    "title": "path",
+                    "type": "string"
+                },
+                "sourceReference": {
+                    "description": "If sourceReference > 0 the contents of the source must be retrieved through the SourceRequest (even if a path is specified). A sourceReference is only valid for a session, so it must not be used to persist a source. The value should be less than or equal to 2147483647 (2^31 - 1).",
+                    "title": "sourceReference",
+                    "type": "number"
+                }
+            },
+            "propertyOrder": [
+                "name",
+                "path",
+                "sourceReference"
+            ],
+            "title": "Source",
+            "type": "object"
+        },
+        "StackFrame": {
+            "properties": {
+                "column": {
+                    "description": "The column within the line. If source is null or doesn't exist, column is 0 and must be ignored.",
+                    "title": "column",
+                    "type": "number"
+                },
+                "id": {
+                    "description": "An identifier for the stack frame. It must be unique across all threads. This id can be used to retrieve the scopes of the frame with the 'scopesRequest' or to restart the execution of a stackframe.",
+                    "title": "id",
+                    "type": "number"
+                },
+                "line": {
+                    "description": "The line within the file of the frame. If source is null or doesn't exist, line is 0 and must be ignored.",
+                    "title": "line",
+                    "type": "number"
+                },
+                "name": {
+                    "description": "The name of the stack frame, typically a method name.",
+                    "title": "name",
+                    "type": "string"
+                },
+                "source": {
+                    "$ref": "#/definitions/Source",
+                    "description": "The optional source of the frame.",
+                    "title": "source"
+                }
+            },
+            "propertyOrder": [
+                "id",
+                "source",
+                "line",
+                "column",
+                "name"
+            ],
+            "type": "object"
+        },
+        "StoppedEvent": {
+            "properties": {
+                "body": {
+                    "description": "Event-specific information.",
+                    "properties": {
+                        "reason": {
+                            "title": "reason",
+                            "type": "string"
+                        }
+                    },
+                    "propertyOrder": [
+                        "reason"
+                    ],
+                    "title": "body",
+                    "type": "object"
+                },
+                "event": {
+                    "description": "Type of event.",
+                    "title": "event",
+                    "type": "string"
+                },
+                "seq": {
+                    "description": "Sequence number (also known as message ID). For protocol messages of type 'request' this ID can be used to cancel the request.",
+                    "title": "seq",
+                    "type": "number"
+                },
+                "type": {
+                    "description": "Message type.\nValues: 'request', 'response', 'event', etc.",
+                    "title": "type",
+                    "type": "string"
+                }
+            },
+            "propertyOrder": [
+                "body",
+                "event",
+                "seq",
+                "type"
+            ],
+            "type": "object"
+        },
+        "TerminatedEvent": {
+            "properties": {
+                "event": {
+                    "description": "Type of event.",
+                    "title": "event",
+                    "type": "string"
+                },
+                "seq": {
+                    "description": "Sequence number (also known as message ID). For protocol messages of type 'request' this ID can be used to cancel the request.",
+                    "title": "seq",
+                    "type": "number"
+                },
+                "type": {
+                    "description": "Message type.\nValues: 'request', 'response', 'event', etc.",
+                    "title": "type",
+                    "type": "string"
+                }
+            },
+            "propertyOrder": [
+                "event",
+                "seq",
+                "type"
+            ],
+            "type": "object"
+        },
+        "Thread": {
+            "properties": {
+                "id": {
+                    "description": "Unique identifier for the thread.",
+                    "title": "id",
+                    "type": "number"
+                },
+                "name": {
+                    "description": "A name of the thread.",
+                    "title": "name",
+                    "type": "string"
+                }
+            },
+            "propertyOrder": [
+                "id",
+                "name"
+            ],
+            "type": "object"
+        },
+        "ThreadEvent": {
+            "properties": {
+                "body": {
+                    "description": "Event-specific information.",
+                    "properties": {
+                        "reason": {
+                            "title": "reason",
+                            "type": "string"
+                        },
+                        "threadId": {
+                            "title": "threadId",
+                            "type": "number"
+                        }
+                    },
+                    "propertyOrder": [
+                        "reason",
+                        "threadId"
+                    ],
+                    "title": "body",
+                    "type": "object"
+                },
+                "event": {
+                    "description": "Type of event.",
+                    "title": "event",
+                    "type": "string"
+                },
+                "seq": {
+                    "description": "Sequence number (also known as message ID). For protocol messages of type 'request' this ID can be used to cancel the request.",
+                    "title": "seq",
+                    "type": "number"
+                },
+                "type": {
+                    "description": "Message type.\nValues: 'request', 'response', 'event', etc.",
+                    "title": "type",
+                    "type": "string"
+                }
+            },
+            "propertyOrder": [
+                "body",
+                "event",
+                "seq",
+                "type"
+            ],
+            "type": "object"
+        },
+        "Variable": {
+            "properties": {
+                "name": {
+                    "description": "The variable's name.",
+                    "title": "name",
+                    "type": "string"
+                },
+                "value": {
+                    "description": "The variable's value. This can be a multi-line text, e.g. for a function the body of a function.",
+                    "title": "value",
+                    "type": "string"
+                },
+                "variablesReference": {
+                    "description": "If variablesReference is > 0, the variable is structured and its children can be retrieved by passing variablesReference to the VariablesRequest.",
+                    "title": "variablesReference",
+                    "type": "number"
+                }
+            },
+            "propertyOrder": [
+                "name",
+                "value",
+                "variablesReference"
+            ],
+            "type": "object"
+        },
+        "Handles": {
+            "properties": {
+                "START_HANDLE": {
+                    "default": 1000,
+                    "title": "START_HANDLE",
+                    "type": "number"
+                },
+                "_handleMap": {
+                    "title": "_handleMap"
+                },
+                "_nextHandle": {
+                    "title": "_nextHandle",
+                    "type": "number"
+                }
+            },
+            "propertyOrder": [
+                "START_HANDLE",
+                "_nextHandle",
+                "_handleMap",
+                "reset",
+                "create",
+                "get"
+            ],
+            "type": "object"
+        },
+        "IInternalLoggerOptions": {
+            "properties": {
+                "consoleMinLogLevel": {
+                    "$ref": "#/definitions/LogLevel",
+                    "title": "consoleMinLogLevel"
+                },
+                "logFilePath": {
+                    "title": "logFilePath",
+                    "type": "string"
+                },
+                "prependTimestamp": {
+                    "title": "prependTimestamp",
+                    "type": "boolean"
+                }
+            },
+            "propertyOrder": [
+                "consoleMinLogLevel",
+                "logFilePath",
+                "prependTimestamp"
+            ],
+            "type": "object"
+        },
+        "ILogCallback": {
+            "propertyOrder": [
+            ],
+            "type": "object"
+        },
+        "ILogItem": {
+            "properties": {
+                "level": {
+                    "$ref": "#/definitions/LogLevel",
+                    "title": "level"
+                },
+                "msg": {
+                    "title": "msg",
+                    "type": "string"
+                }
+            },
+            "propertyOrder": [
+                "msg",
+                "level"
+            ],
+            "title": "ILogItem",
+            "type": "object"
+        },
+        "ILogger": {
+            "propertyOrder": [
+                "log",
+                "verbose",
+                "warn",
+                "error"
+            ],
+            "type": "object"
+        },
+        "InternalLogger": {
+            "description": "Manages logging, whether to console.log, file, or VS Code console.\nEncapsulates the state specific to each logging session",
+            "properties": {
+                "_logCallback": {
+                    "description": "Log info that meets minLogLevel is sent to this callback.",
+                    "propertyOrder": [
+                    ],
+                    "title": "_logCallback",
+                    "type": "object"
+                },
+                "_logFileStream": {
+                    "$ref": "#/definitions/WriteStream",
+                    "description": "Write steam for log file",
+                    "title": "_logFileStream"
+                },
+                "_logToConsole": {
+                    "title": "_logToConsole",
+                    "type": "boolean"
+                },
+                "_minLogLevel": {
+                    "$ref": "#/definitions/LogLevel",
+                    "title": "_minLogLevel"
+                },
+                "_prependTimestamp": {
+                    "description": "Whether to add a timestamp to messages in the logfile",
+                    "title": "_prependTimestamp",
+                    "type": "boolean"
+                },
+                "beforeExitCallback": {
+                    "description": "Dispose and allow exit to continue normally",
+                    "propertyOrder": [
+                    ],
+                    "title": "beforeExitCallback",
+                    "type": "object"
+                },
+                "disposeCallback": {
+                    "description": "Dispose and exit",
+                    "title": "disposeCallback"
+                }
+            },
+            "propertyOrder": [
+                "_minLogLevel",
+                "_logToConsole",
+                "_logCallback",
+                "_logFileStream",
+                "beforeExitCallback",
+                "disposeCallback",
+                "_prependTimestamp",
+                "setup",
+                "logDateTime",
+                "setupShutdownListeners",
+                "removeShutdownListeners",
+                "dispose",
+                "log",
+                "sendLog"
+            ],
+            "title": "InternalLogger",
+            "type": "object"
+        },
+        "LogLevel": {
+            "enum": [
+                0,
+                1,
+                2,
+                3,
+                4
+            ],
+            "title": "LogLevel",
+            "type": "number"
+        },
+        "LogOutputEvent": {
+            "properties": {
+                "body": {
+                    "description": "Event-specific information.",
+                    "properties": {
+                        "category": {
+                            "title": "category",
+                            "type": "string"
+                        },
+                        "data": {
+                            "title": "data"
+                        },
+                        "output": {
+                            "title": "output",
+                            "type": "string"
+                        }
+                    },
+                    "propertyOrder": [
+                        "category",
+                        "output",
+                        "data"
+                    ],
+                    "title": "body",
+                    "type": "object"
+                },
+                "event": {
+                    "description": "Type of event.",
+                    "title": "event",
+                    "type": "string"
+                },
+                "seq": {
+                    "description": "Sequence number (also known as message ID). For protocol messages of type 'request' this ID can be used to cancel the request.",
+                    "title": "seq",
+                    "type": "number"
+                },
+                "type": {
+                    "description": "Message type.\nValues: 'request', 'response', 'event', etc.",
+                    "title": "type",
+                    "type": "string"
+                }
+            },
+            "propertyOrder": [
+                "body",
+                "event",
+                "seq",
+                "type"
+            ],
+            "type": "object"
+        },
+        "Logger": {
+            "properties": {
+                "_currentLogger": {
+                    "$ref": "#/definitions/InternalLogger",
+                    "title": "_currentLogger"
+                },
+                "_logFilePathFromInit": {
+                    "title": "_logFilePathFromInit",
+                    "type": "string"
+                },
+                "_pendingLogQ": {
+                    "default": [
+                    ],
+                    "items": {
+                        "$ref": "#/definitions/ILogItem"
+                    },
+                    "title": "_pendingLogQ",
+                    "type": "array"
+                }
+            },
+            "propertyOrder": [
+                "_logFilePathFromInit",
+                "_currentLogger",
+                "_pendingLogQ",
+                "log",
+                "verbose",
+                "warn",
+                "error",
+                "dispose",
+                "_write",
+                "setup",
+                "init"
+            ],
+            "type": "object"
+        },
+        "WriteStream": {
+            "properties": {
+                "bytesWritten": {
+                    "title": "bytesWritten",
+                    "type": "number"
+                },
+                "path": {
+                    "anyOf": [
+                        {
+                            "description": "Raw data is stored in instances of the Buffer class.\nA Buffer is similar to an array of integers but corresponds to a raw memory allocation outside the V8 heap.  A Buffer cannot be resized.\nValid string encodings: 'ascii'|'utf8'|'utf16le'|'ucs2'(alias of 'utf16le')|'base64'|'binary'(deprecated)|'hex'",
+                            "items": {
+                                "type": "number"
+                            },
+                            "type": "array"
+                        },
+                        {
+                            "type": "string"
+                        }
+                    ],
+                    "title": "path"
+                },
+                "writable": {
+                    "title": "writable",
+                    "type": "boolean"
+                }
+            },
+            "propertyOrder": [
+                "close",
+                "bytesWritten",
+                "path",
+                "addListener",
+                "on",
+                "once",
+                "prependListener",
+                "prependOnceListener",
+                "writable",
+                "_write",
+                "_writev",
+                "_destroy",
+                "_final",
+                "write",
+                "setDefaultEncoding",
+                "end",
+                "cork",
+                "uncork",
+                "destroy",
+                "emit",
+                "removeListener",
+                "pipe",
+                "removeAllListeners",
+                "setMaxListeners",
+                "getMaxListeners",
+                "listeners",
+                "eventNames",
+                "listenerCount"
+            ],
+            "title": "WriteStream",
+            "type": "object"
+        },
+        "Emitter<DebugProtocolMessage>": {
+            "properties": {
+                "_event": {
+                    "$ref": "#/definitions/Event0<DebugProtocolMessage>",
+                    "title": "_event"
+                },
+                "_listener": {
+                    "propertyOrder": [
+                    ],
+                    "title": "_listener",
+                    "type": "object"
+                },
+                "_this": {
+                    "title": "_this"
+                },
+                "event": {
+                    "$ref": "#/definitions/Event0<DebugProtocolMessage>",
+                    "title": "event"
+                }
+            },
+            "propertyOrder": [
+                "_event",
+                "_listener",
+                "_this",
+                "event",
+                "fire",
+                "dispose"
+            ],
+            "title": "Emitter<DebugProtocolMessage>",
+            "type": "object"
+        },
+        "Emitter<Error>": {
+            "properties": {
+                "_event": {
+                    "$ref": "#/definitions/Event0<Error>",
+                    "title": "_event"
+                },
+                "_listener": {
+                    "propertyOrder": [
+                    ],
+                    "title": "_listener",
+                    "type": "object"
+                },
+                "_this": {
+                    "title": "_this"
+                },
+                "event": {
+                    "$ref": "#/definitions/Event0<Error>",
+                    "title": "event"
+                }
+            },
+            "propertyOrder": [
+                "_event",
+                "_listener",
+                "_this",
+                "event",
+                "fire",
+                "dispose"
+            ],
+            "title": "Emitter<Error>",
+            "type": "object"
+        },
+        "Event0<DebugProtocolMessage>": {
+            "propertyOrder": [
+            ],
+            "title": "Event0<DebugProtocolMessage>",
+            "type": "object"
+        },
+        "Event0<Error>": {
+            "propertyOrder": [
+            ],
+            "title": "Event0<Error>",
+            "type": "object"
+        },
+        "LoggingDebugSession": {
+            "properties": {
+                "_clientColumnsStartAt1": {
+                    "title": "_clientColumnsStartAt1",
+                    "type": "boolean"
+                },
+                "_clientLinesStartAt1": {
+                    "title": "_clientLinesStartAt1",
+                    "type": "boolean"
+                },
+                "_clientPathsAreURIs": {
+                    "title": "_clientPathsAreURIs",
+                    "type": "boolean"
+                },
+                "_contentLength": {
+                    "title": "_contentLength",
+                    "type": "number"
+                },
+                "_debuggerColumnsStartAt1": {
+                    "title": "_debuggerColumnsStartAt1",
+                    "type": "boolean"
+                },
+                "_debuggerLinesStartAt1": {
+                    "title": "_debuggerLinesStartAt1",
+                    "type": "boolean"
+                },
+                "_debuggerPathsAreURIs": {
+                    "title": "_debuggerPathsAreURIs",
+                    "type": "boolean"
+                },
+                "_isServer": {
+                    "title": "_isServer",
+                    "type": "boolean"
+                },
+                "_pendingRequests": {
+                    "title": "_pendingRequests"
+                },
+                "_rawData": {
+                    "description": "Raw data is stored in instances of the Buffer class.\nA Buffer is similar to an array of integers but corresponds to a raw memory allocation outside the V8 heap.  A Buffer cannot be resized.\nValid string encodings: 'ascii'|'utf8'|'utf16le'|'ucs2'(alias of 'utf16le')|'base64'|'binary'(deprecated)|'hex'",
+                    "items": {
+                        "type": "number"
+                    },
+                    "title": "_rawData",
+                    "type": "array"
+                },
+                "_sequence": {
+                    "title": "_sequence",
+                    "type": "number"
+                },
+                "_writableStream": {
+                    "$ref": "#/definitions/NodeJS.WritableStream",
+                    "title": "_writableStream"
+                },
+                "error": {
+                    "$ref": "#/definitions/Emitter<Error>",
+                    "title": "error"
+                },
+                "obsolete_logFilePath": {
+                    "title": "obsolete_logFilePath",
+                    "type": "string"
+                },
+                "onError": {
+                    "$ref": "#/definitions/Event0<Error>",
+                    "title": "onError"
+                },
+                "onSendMessage": {
+                    "$ref": "#/definitions/Event0<DebugProtocolMessage>",
+                    "title": "onSendMessage"
+                },
+                "sendMessage": {
+                    "$ref": "#/definitions/Emitter<DebugProtocolMessage>",
+                    "title": "sendMessage"
+                }
+            },
+            "propertyOrder": [
+                "obsolete_logFilePath",
+                "start",
+                "sendEvent",
+                "sendRequest",
+                "sendResponse",
+                "dispatchRequest",
+                "_debuggerLinesStartAt1",
+                "_debuggerColumnsStartAt1",
+                "_debuggerPathsAreURIs",
+                "_clientLinesStartAt1",
+                "_clientColumnsStartAt1",
+                "_clientPathsAreURIs",
+                "_isServer",
+                "setDebuggerPathFormat",
+                "setDebuggerLinesStartAt1",
+                "setDebuggerColumnsStartAt1",
+                "setRunAsServer",
+                "shutdown",
+                "sendErrorResponse",
+                "runInTerminalRequest",
+                "initializeRequest",
+                "disconnectRequest",
+                "launchRequest",
+                "attachRequest",
+                "terminateRequest",
+                "restartRequest",
+                "setBreakPointsRequest",
+                "setFunctionBreakPointsRequest",
+                "setExceptionBreakPointsRequest",
+                "configurationDoneRequest",
+                "continueRequest",
+                "nextRequest",
+                "stepInRequest",
+                "stepOutRequest",
+                "stepBackRequest",
+                "reverseContinueRequest",
+                "restartFrameRequest",
+                "gotoRequest",
+                "pauseRequest",
+                "sourceRequest",
+                "threadsRequest",
+                "terminateThreadsRequest",
+                "stackTraceRequest",
+                "scopesRequest",
+                "variablesRequest",
+                "setVariableRequest",
+                "setExpressionRequest",
+                "evaluateRequest",
+                "stepInTargetsRequest",
+                "gotoTargetsRequest",
+                "completionsRequest",
+                "exceptionInfoRequest",
+                "loadedSourcesRequest",
+                "dataBreakpointInfoRequest",
+                "setDataBreakpointsRequest",
+                "readMemoryRequest",
+                "disassembleRequest",
+                "cancelRequest",
+                "breakpointLocationsRequest",
+                "customRequest",
+                "convertClientLineToDebugger",
+                "convertDebuggerLineToClient",
+                "convertClientColumnToDebugger",
+                "convertDebuggerColumnToClient",
+                "convertClientPathToDebugger",
+                "convertDebuggerPathToClient",
+                "_rawData",
+                "_contentLength",
+                "_sequence",
+                "_writableStream",
+                "_pendingRequests",
+                "sendMessage",
+                "error",
+                "onSendMessage",
+                "onError",
+                "handleMessage",
+                "stop",
+                "_emitEvent",
+                "_send",
+                "_handleData",
+                "addListener",
+                "on",
+                "once",
+                "prependListener",
+                "prependOnceListener",
+                "removeListener",
+                "removeAllListeners",
+                "setMaxListeners",
+                "getMaxListeners",
+                "listeners",
+                "emit",
+                "eventNames",
+                "listenerCount"
+            ],
+            "type": "object"
+        },
+        "NodeJS.WritableStream": {
+            "properties": {
+                "writable": {
+                    "title": "writable",
+                    "type": "boolean"
+                }
+            },
+            "propertyOrder": [
+                "writable",
+                "write",
+                "end",
+                "addListener",
+                "on",
+                "once",
+                "removeListener",
+                "removeAllListeners",
+                "setMaxListeners",
+                "getMaxListeners",
+                "listeners",
+                "emit",
+                "listenerCount",
+                "prependListener",
+                "prependOnceListener",
+                "eventNames"
+            ],
+            "title": "NodeJS.WritableStream",
+            "type": "object"
+        },
+        "Event": {
+            "properties": {
+                "event": {
+                    "description": "Type of event.",
+                    "title": "event",
+                    "type": "string"
+                },
+                "seq": {
+                    "description": "Sequence number (also known as message ID). For protocol messages of type 'request' this ID can be used to cancel the request.",
+                    "title": "seq",
+                    "type": "number"
+                },
+                "type": {
+                    "description": "Message type.\nValues: 'request', 'response', 'event', etc.",
+                    "title": "type",
+                    "type": "string"
+                }
+            },
+            "propertyOrder": [
+                "event",
+                "seq",
+                "type"
+            ],
+            "type": "object"
+        },
+        "Message": {
+            "properties": {
+                "seq": {
+                    "description": "Sequence number (also known as message ID). For protocol messages of type 'request' this ID can be used to cancel the request.",
+                    "title": "seq",
+                    "type": "number"
+                },
+                "type": {
+                    "description": "Message type.\nValues: 'request', 'response', 'event', etc.",
+                    "title": "type",
+                    "type": "string"
+                }
+            },
+            "propertyOrder": [
+                "seq",
+                "type"
+            ],
+            "type": "object"
+        },
+        "Response": {
+            "properties": {
+                "command": {
+                    "description": "The command requested.",
+                    "title": "command",
+                    "type": "string"
+                },
+                "request_seq": {
+                    "description": "Sequence number of the corresponding request.",
+                    "title": "request_seq",
+                    "type": "number"
+                },
+                "seq": {
+                    "description": "Sequence number (also known as message ID). For protocol messages of type 'request' this ID can be used to cancel the request.",
+                    "title": "seq",
+                    "type": "number"
+                },
+                "success": {
+                    "description": "Outcome of the request.\nIf true, the request was successful and the 'body' attribute may contain the result of the request.\nIf the value is false, the attribute 'message' contains the error in short form and the 'body' may contain additional information (see 'ErrorResponse.body.error').",
+                    "title": "success",
+                    "type": "boolean"
+                },
+                "type": {
+                    "description": "Message type.\nValues: 'request', 'response', 'event', etc.",
+                    "title": "type",
+                    "type": "string"
+                }
+            },
+            "propertyOrder": [
+                "request_seq",
+                "success",
+                "command",
+                "seq",
+                "type"
+            ],
+            "type": "object"
+        },
+        "DebugProtocolMessage": {
+            "propertyOrder": [
+            ],
+            "type": "object"
+        },
+        "Disposable0": {
+            "propertyOrder": [
+                "dispose"
+            ],
+            "type": "object"
+        },
+        "Emitter": {
+            "properties": {
+                "_event": {
+                    "$ref": "#/definitions/Event0<T>",
+                    "title": "_event"
+                },
+                "_listener": {
+                    "propertyOrder": [
+                    ],
+                    "title": "_listener",
+                    "type": "object"
+                },
+                "_this": {
+                    "title": "_this"
+                },
+                "event": {
+                    "$ref": "#/definitions/Event0<T>",
+                    "title": "event"
+                }
+            },
+            "propertyOrder": [
+                "_event",
+                "_listener",
+                "_this",
+                "event",
+                "fire",
+                "dispose"
+            ],
+            "type": "object"
+        },
+        "Emitter<DebugProtocolMessage>": {
+            "properties": {
+                "_event": {
+                    "$ref": "#/definitions/Event0<DebugProtocolMessage>",
+                    "title": "_event"
+                },
+                "_listener": {
+                    "propertyOrder": [
+                    ],
+                    "title": "_listener",
+                    "type": "object"
+                },
+                "_this": {
+                    "title": "_this"
+                },
+                "event": {
+                    "$ref": "#/definitions/Event0<DebugProtocolMessage>",
+                    "title": "event"
+                }
+            },
+            "propertyOrder": [
+                "_event",
+                "_listener",
+                "_this",
+                "event",
+                "fire",
+                "dispose"
+            ],
+            "title": "Emitter<DebugProtocolMessage>",
+            "type": "object"
+        },
+        "Emitter<Error>": {
+            "properties": {
+                "_event": {
+                    "$ref": "#/definitions/Event0<Error>",
+                    "title": "_event"
+                },
+                "_listener": {
+                    "propertyOrder": [
+                    ],
+                    "title": "_listener",
+                    "type": "object"
+                },
+                "_this": {
+                    "title": "_this"
+                },
+                "event": {
+                    "$ref": "#/definitions/Event0<Error>",
+                    "title": "event"
+                }
+            },
+            "propertyOrder": [
+                "_event",
+                "_listener",
+                "_this",
+                "event",
+                "fire",
+                "dispose"
+            ],
+            "title": "Emitter<Error>",
+            "type": "object"
+        },
+        "Event0": {
+            "propertyOrder": [
+            ],
+            "type": "object"
+        },
+        "Event0<DebugProtocolMessage>": {
+            "propertyOrder": [
+            ],
+            "title": "Event0<DebugProtocolMessage>",
+            "type": "object"
+        },
+        "Event0<Error>": {
+            "propertyOrder": [
+            ],
+            "title": "Event0<Error>",
+            "type": "object"
+        },
+        "Event0<T>": {
+            "propertyOrder": [
+            ],
+            "title": "Event0<T>",
+            "type": "object"
+        },
+        "IDisposable": {
+            "propertyOrder": [
+                "dispose"
+            ],
+            "type": "object"
+        },
+        "NodeJS.WritableStream": {
+            "properties": {
+                "writable": {
+                    "title": "writable",
+                    "type": "boolean"
+                }
+            },
+            "propertyOrder": [
+                "writable",
+                "write",
+                "end",
+                "addListener",
+                "on",
+                "once",
+                "removeListener",
+                "removeAllListeners",
+                "setMaxListeners",
+                "getMaxListeners",
+                "listeners",
+                "emit",
+                "listenerCount",
+                "prependListener",
+                "prependOnceListener",
+                "eventNames"
+            ],
+            "title": "NodeJS.WritableStream",
+            "type": "object"
+        },
+        "ProtocolServer": {
+            "properties": {
+                "_contentLength": {
+                    "title": "_contentLength",
+                    "type": "number"
+                },
+                "_pendingRequests": {
+                    "title": "_pendingRequests"
+                },
+                "_rawData": {
+                    "description": "Raw data is stored in instances of the Buffer class.\nA Buffer is similar to an array of integers but corresponds to a raw memory allocation outside the V8 heap.  A Buffer cannot be resized.\nValid string encodings: 'ascii'|'utf8'|'utf16le'|'ucs2'(alias of 'utf16le')|'base64'|'binary'(deprecated)|'hex'",
+                    "items": {
+                        "type": "number"
+                    },
+                    "title": "_rawData",
+                    "type": "array"
+                },
+                "_sequence": {
+                    "title": "_sequence",
+                    "type": "number"
+                },
+                "_writableStream": {
+                    "$ref": "#/definitions/NodeJS.WritableStream",
+                    "title": "_writableStream"
+                },
+                "error": {
+                    "$ref": "#/definitions/Emitter<Error>",
+                    "title": "error"
+                },
+                "onError": {
+                    "$ref": "#/definitions/Event0<Error>",
+                    "title": "onError"
+                },
+                "onSendMessage": {
+                    "$ref": "#/definitions/Event0<DebugProtocolMessage>",
+                    "title": "onSendMessage"
+                },
+                "sendMessage": {
+                    "$ref": "#/definitions/Emitter<DebugProtocolMessage>",
+                    "title": "sendMessage"
+                }
+            },
+            "propertyOrder": [
+                "_rawData",
+                "_contentLength",
+                "_sequence",
+                "_writableStream",
+                "_pendingRequests",
+                "sendMessage",
+                "error",
+                "onSendMessage",
+                "onError",
+                "handleMessage",
+                "start",
+                "stop",
+                "sendEvent",
+                "sendResponse",
+                "sendRequest",
+                "dispatchRequest",
+                "_emitEvent",
+                "_send",
+                "_handleData",
+                "addListener",
+                "on",
+                "once",
+                "prependListener",
+                "prependOnceListener",
+                "removeListener",
+                "removeAllListeners",
+                "setMaxListeners",
+                "getMaxListeners",
+                "listeners",
+                "emit",
+                "eventNames",
+                "listenerCount"
+            ],
+            "type": "object"
+        },
+        "VSCodeDebugAdapter": {
+            "description": "A structurally equivalent copy of vscode.DebugAdapter",
+            "properties": {
+                "onError": {
+                    "$ref": "#/definitions/Event0<Error>",
+                    "title": "onError"
+                },
+                "onSendMessage": {
+                    "$ref": "#/definitions/Event0<DebugProtocolMessage>",
+                    "title": "onSendMessage"
+                }
+            },
+            "propertyOrder": [
+                "onSendMessage",
+                "onError",
+                "handleMessage"
+            ],
+            "type": "object"
+        }
+    }
+}
