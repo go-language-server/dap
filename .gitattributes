@@ -1,0 +1,6 @@
+# go-language-server/dap project gitattributes file
+# https://github.com/github/linguist#using-gitattributes
+
+docs linguist-documentation
+*.pb.go linguist-generated
+*_string.go linguist-generated
